@@ -1,0 +1,11 @@
+{
+  "title": "1. Etapa de fundaciones",
+  "text": "Se basa en cimientos prefabricados de hormigon armado. Sobrecimientos compuestos por una parrilla o envugado de acero.",
+  "section": [
+    {
+      "title": "Esta sera la base de soporte del resto de la estructura",
+      "content": "Ant Design is a React UI library that has a lot of easy-to-use components for building elegant UI.",
+      "icon": "base_casa.png"
+    }
+  ]
+}

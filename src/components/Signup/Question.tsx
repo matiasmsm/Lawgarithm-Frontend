@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { QuestionDiv, Input, SelectInput, H6, FormDiv, Checkbox, Label, CheckboxDiv, SubmitDiv } from './styles';
 import { ReactTyped } from "react-typed";
-import { get_business_types, get_industries, get_countries } from '../../api';
+import { get_industries } from '../../api';
 import { Col, Row } from 'antd';
 
 interface QuestionProps {
@@ -30,36 +30,11 @@ const Question: React.FC<QuestionProps> = ({ question, type, options, onChange, 
     }
   }
 
-  async function handleGetBusinesses() {
-    try {
-      if (selectedIndustry) {
-        const response = await get_business_types(selectedIndustry);
-        setBusinesses(response.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleGetCountries() {
-    try {
-      const response = await get_countries();
-      setCountries(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   useEffect(() => {
     handleGetIndustries();
-    handleGetCountries();
   }, []);
 
-  useEffect(() => {
-    if (selectedIndustry) {
-      handleGetBusinesses();
-    }
-  }, [selectedIndustry]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

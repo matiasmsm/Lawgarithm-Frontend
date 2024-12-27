@@ -20,6 +20,11 @@ const routes = [
     exact: true,
     component: "Signup",
   },
+  {
+    path: ["/", "/regulations"],
+    exact: true,
+    component: "Regulations",
+  },
 ];
 
 export default routes;

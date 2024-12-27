@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const StyledButton = styled("button")<any>`
-  background:  #fa826d;;
+  background:  transparent;
   color: ${(p) => (p.color ? "#0d0200" : "#0d0200")};
   font-size: 1rem;
   font-weight: 700;
   width: 100%;
-  border: 2px solid #000000;
+  border: 2px solid #68B684;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 0.625rem;

@@ -71,14 +71,48 @@ export const get_user_activity = async () => {
   }
 };
 
-export const get_user_todo = async () => {
+// Regulations
+export const get_regulations = async (page: number, pageSize: number) => {
   try {
-    const response = await backendAPIWithCookies.get('users/todo');
-    return response;
+    // Append the page and pageSize query parameters to the URL
+    const response = await backendAPI.get('regulations/all', {
+      params: {
+        page,       // current page number
+        pageSize    // number of items per page
+      }
+    });
+
+    return response;  // Ensure you're returning the actual data from the response
+
   } catch (error: any) {
     throw new Error((error as AxiosError)?.response?.data?.message || 'Get industry types failed');
   }
 };
+
+export const get_regulations_country = async (country: string, page: number, pageSize: number) => {
+  try {
+    const response = await backendAPI.get('regulations/country', {
+      params: {
+        country,
+        page,
+        pageSize,
+      },
+    });
+    return response;
+  } catch (error: any) {
+    throw new Error((error as AxiosError)?.response?.data?.message || 'Fetching regulations for a country failed');
+  }
+};
+
+
+export const get_countries = async () => {
+  try {
+    const response = await backendAPI.get('regulations/countries');
+    return response;
+  } catch (error: any) {
+    throw new Error((error as AxiosError)?.response?.data?.message || 'Get countries failed');
+  }
+}
 
 //Chat
 export const chat_query = async (text: string) => {
@@ -100,7 +134,8 @@ export const get_industries = async () => {
   }
 };
 
-//Businesses
+
+//User Businesses
 export const get_all_userbusinesses = async () => {
   try {
     const response = await backendAPI.get(`businesses/all/user_businesses`); // Adjust the endpoint URL
@@ -110,16 +145,6 @@ export const get_all_userbusinesses = async () => {
   }
 };
 
-export const get_business_types = async (industry_id: string) => {
-  try {
-    const response = await backendAPI.get(`businesses/types/${industry_id}`); // Adjust the endpoint URL
-    return response; // Return the response data, assuming you want to handle it elsewhere
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get businesses types failed');
-  }
-};
-
-//User Businesses
 export const create_business = async (title: string, businessId: string, location: string) => {
   try {
     const response = await backendAPIWithCookies.post('businesses/create/', { title, location, businessId});
@@ -146,179 +171,6 @@ export const get_user_businesses = async () => {
     throw new Error((error as AxiosError)?.response?.data?.message || 'Get user businesses failed');
   }
 };
-
-//Templates
-export const create_template = async (title: string, type: string, nodes: any, edges: any, businessId: number)=> {
-  try {
-    console.log("Creating template");
-    const response = await backendAPIWithCookies.post(`templates/create/`, { title, type, nodes, edges, businessId });
-    return response;
-  } catch (error) {
-    console.error('Error creating template:', error);
-    throw error; // Rethrow the error for handling in your component or context
-  }
-};
-
-export const get_user_templates = async () => {
-  try {
-    const response = await backendAPIWithCookies.get('templates/user_templates');
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get user templates failed');
-  }
-};
-
-export const get_user_template = async (templateId: number)=> {
-  try {
-    const response = await backendAPIWithCookies.get('templates/user_template', {
-      params: { templateId }
-    });
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get user template failed');
-  }
-};
-
-export const edit_template = async (templateId: number)=> {
-  try {
-    const response = await backendAPIWithCookies.put('templates/user_template', {
-      params: { templateId }
-    });
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Edit user template failed');
-  }
-};
-
-export const delete_template = async (templateId: number)=> {
-  try {
-    const response = await backendAPIWithCookies.delete(`templates/delete/${templateId}`);
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Delete user template failed');
-  }
-};
-
-export const get_businesstype_templates = async (businessId: number) => {
-  try {
-    const response = await backendAPIWithCookies.get(`/templates/businesstype/${businessId}`);
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get business templates failed');
-  }
-};
-
-export const save_template = async (templateId: number, nodes: any, edges: any)=> {
-  try {
-    console.log("Saving template");
-    const response = await backendAPIWithCookies.put(`templates/save/`, { templateId, nodes, edges});
-    return response;
-  } catch (error) {
-    console.error('Error saving template:', error);
-    throw error; // Rethrow the error for handling in your component or context
-  }
-};
-
-
-export const set_template = async (templateId: number, userBusinessId: number)=> {
-  try {
-    const response = await backendAPIWithCookies.post(`templates/settemplate/`, { templateId, userBusinessId });
-    return response;
-  } catch (error) {
-    console.error('Error creating template:', error);
-    throw error; // Rethrow the error for handling in your component or context
-  }
-};
-
-export const get_userbusiness_template = async (userBusinessId: number) => {
-  try {
-    const response = await backendAPIWithCookies.get(`/templates/userbusinesstemplate/${userBusinessId}`);
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get user templates failed');
-  }
-};
-
-export const get_alluserbusiness_templates = async (userBusinessId: number) => {
-  try {
-    const response = await backendAPIWithCookies.get(`/templates/alluserbusinesstemplates/${userBusinessId}`);
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get user templates failed');
-  }
-};
-
-export const get_templates = async () => {
-  try {
-    const response = await backendAPIWithCookies.get(`templates/all`);
-    return response;
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get templates failed');
-  }
-};
-
-
-//Products
-export const create_product = async (userBusinessId: number, description: string)=> {
-  try {
-    const response = await backendAPIWithCookies.post(`products/create/`, { userBusinessId, description });
-    return response;
-  } catch (error) {
-    console.error('Error creating template:', error);
-    throw error; // Rethrow the error for handling in your component or context
-  }
-};
-
-export const get_user_business_product_types = async (businessId: number) => {
-  try {
-    const response = await backendAPIWithCookies.get(`products/types/user_business/${businessId}`); // Adjust the endpoint URL
-    return response; // Return the response data, assuming you want to handle it elsewhere
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get products types failed');
-  }
-};
-
-export const get_user_business_products = async (businessId: number) => {
-  try {
-    const response = await backendAPIWithCookies.get(`products/business_products/${businessId}`); // Adjust the endpoint URL
-    return response; // Return the response data, assuming you want to handle it elsewhere
-  } catch (error: any) {
-    throw new Error((error as AxiosError)?.response?.data?.message || 'Get products types failed');
-  }
-};
-
-//Other
-const COUNTRIES_API_URL = 'https://restcountries.com/v3.1/all';
-
-export const get_countries = async () => {
-  try {
-    const response = await axios.get(COUNTRIES_API_URL);
-    return response;
-  } catch (error) {
-    console.error('Error fetching countries:', error);
-    throw error;
-  }
-};
-
-const GEO_API_URL = 'http://api.geonames.org/';
-const USERNAME = 'deepco'; // You need to sign up at GeoNames to get a username.
-
-export const getLocations = async (countryCode: string) => {
-    try {
-        const response = await axios.get(`${GEO_API_URL}searchJSON`, {
-            params: {
-                country: countryCode,
-                username: USERNAME,
-                maxRows: 10 // Number of rows you want to fetch
-            }
-        });
-        return response.data.geonames;
-    } catch (error) {
-        console.error('Error fetching locations:', error);
-        throw error;
-    }
-};
-
 
 
 

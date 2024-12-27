@@ -4,10 +4,10 @@ import { withTranslation } from "react-i18next";
 import {FixedCol, CustomImg, ScrollableCol, TitleConstruction,
    SecondScrollableCol, SubtitleConstruction, H6, CustomRow,
     CustomCol,CustomDiv, IntroDiv, CircleDiv, ArrowDownDiv, 
-    SignupDiv, MapDiv, TryTitle, InstructionDiv, GenerateButtonDiv,
-  LogoDiv, TryItDiv, IntroRow} from "./styles";
+    SignupDiv, LogoDiv, RegDiv, Title, Country, Summary, Brand,
+    HompageOptionsDiv, PaginationDiv} from "./styles";
 
-import { get_industries } from '../../api';
+import { get_regulations } from '../../api';
 
 import { Row, Col } from "antd";
 import { Button } from "../../common/Button";
@@ -21,6 +21,9 @@ import { FaArrowDown } from 'react-icons/fa';
 import { MdAddBusiness } from "react-icons/md";
 import { MdExplore } from "react-icons/md";
 import { FaHandshakeAngle } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6";
+
 
 
 
@@ -48,13 +51,16 @@ const PushableCols = ({ t }: Props) => {
   const [isLoginClicked, setIsLoginClicked] = useState(false);
   const [isSignupClicked, setIsSignupClicked] = useState(false);
 
-  const [industries, setIndustries] = useState([]);
-
   const [showCreate, setShowCreate] = useState(false);
   const [showEcosystem, setShowEcosystem] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
 
   const [showArrow, setShowArrow] = useState(true);
+
+  const [regulations, setRegulations] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(100); // Keep track of total pages
+
   
   const { ref, inView } = useInView({
     triggerOnce: true, // Only trigger once
@@ -70,20 +76,38 @@ const PushableCols = ({ t }: Props) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const fetchIndustries = async () => {
+
+  const fetchRegulations = async () => {
     try {
-      const response = await get_industries();
-      setIndustries(response.data); // Assuming the forms list is located in the 'forms_list' key of the JSON response
+      const response = await get_regulations(currentPage, 5);
+      console.log(response.data);
+      setRegulations(response.data);
     } catch (error) {
     }
   };
 
   useEffect(() => {
-    fetchIndustries();
+    fetchRegulations();
   }, []);
-
+  
   const handleMiddleClick = () => {
     setIsMiddleClicked(!isMiddleClicked);
+  };
+
+  const handlePageChange = async (page: number) => {
+    console.log(page);
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page); // Update the state
+      console.log(`Fetching regulations for page: ${page}`);
+      try {
+        await fetchRegulations(); // Wait for the fetch to complete
+        console.log('Fetch completed.');
+      } catch (error) {
+        console.error('Error fetching regulations:', error);
+      }
+    } else {
+      console.log('Page out of bounds');
+    }
   };
 
   const handleCustomImgClick = (clickedTitle: string) => {
@@ -102,9 +126,8 @@ const PushableCols = ({ t }: Props) => {
     }
   };
 
-  const handleLoginClick = () => {
-    setIsLoginClicked(!isLoginClicked);
-    setIsSignupClicked(false);
+  const handleExploreClick = () => {
+    navigate("/regulations");
   };
 
   const handleSignupClick = () => {
@@ -122,44 +145,62 @@ const PushableCols = ({ t }: Props) => {
       ) : (
         null
       )}
-      <FixedCol span={isMiddleClicked ? 12 : 12} className={`left ${isMiddleClicked ? 'pushed' : ''}`}>
-        <div style={{position: "fixed"}}>
-          <LogoDiv>
-            <ReactTyped strings={["Lawgarithm"]} typeSpeed={40} style={{ color: "#37f87b", fontSize: "1.6em" }}/>
-          </LogoDiv>
-          <IntroDiv>
-            <ReactTyped strings={["Build your business like an expert."]} typeSpeed={40} style={{ color: "#37f87b", fontSize: "1.6em" }}/>
-          </IntroDiv>
-          <SignupDiv>
-            <Button name="submit" onClick={handleSignupClick}>{t("Sign up")}</Button>
-            <Button name="submit" onClick={handleLoginClick}>{t("Sign in")}</Button>
-          </SignupDiv>
+      <FixedCol span={10}>
+        <div>
+          <Row>
+            <LogoDiv>
+              <Brand>Lawgarithm</Brand>
+            </LogoDiv>
+          </Row>
+          <Row>
+            <IntroDiv>
+              <ReactTyped strings={["Global Regulations, At Your Fingertips."]} typeSpeed={40} style={{ color: "#861388", fontSize: "1.4em" }}/>
+            </IntroDiv>
+          </Row>
+          <HompageOptionsDiv>
+            <Row>
+              <Button name="submit" onClick={handleSignupClick}>{t("Join")}</Button>
+              <Button name="submit" onClick={handleExploreClick}>{t("Explore")}</Button>
+            </Row>
+          </HompageOptionsDiv>
         </div>
       </FixedCol>
 
-      <ScrollableCol span={12} className={`middle ${isMiddleClicked ? 'pushed' : ''}`}>
+      <ScrollableCol span={14}>
         <CustomDiv>
-          <CustomRow justify="space-between" align="middle" onClick={handleMiddleClick}>
-            <CustomCol lg={9} md={8} sm={8} xs={10} onClick={() => handleCustomImgClick("Create")} style={{ cursor: 'pointer' }}>
-              <MdAddBusiness size={72} style={{ color: "#0d0200"}}/>
-              <H6>{t("Create a business")}</H6>
-            </CustomCol>
-            <CustomCol lg={9} md={8} sm={11} xs={10} onClick={() => handleCustomImgClick("Ecosystem")} style={{ cursor: 'pointer' }}>
-              <MdExplore size={72} style={{ color: "#0d0200"}}/>
-              <H6>{t("Explore our ecosystem")}</H6>
-            </CustomCol>
-          </CustomRow>
-          <CustomRow justify="space-between" align="middle" onClick={handleMiddleClick}>
-            <CustomCol lg={9} md={8} sm={8} xs={10} onClick={() => handleCustomImgClick("About us")} style={{ cursor: 'pointer' }}>
-              <FaHandshakeAngle size={72} style={{ color: "#0d0200"}}/>
-              <H6>{t("About us")}</H6>
-            </CustomCol>
-            <CustomCol lg={9} md={8} sm={8} xs={10} onClick={() => handleCustomImgClick("Yield")} style={{ cursor: 'pointer' }}>
-              <TiWeatherPartlySunny size={72} style={{ color: "#0d0200"}}/>
-              <H6>{t("")}</H6>
-            </CustomCol>
-          </CustomRow>
+          {regulations.map((regulation: any) => (
+            <RegDiv key={regulation.id}>
+              <Row>
+                <Col span={20}>
+                  <Country>{regulation.country}</Country>
+                </Col>
+                <Col span={4}>
+                  <Summary>{regulation.timestamp}</Summary>
+                </Col>
+              </Row>
+              <Row>
+                <Title href={regulation.link}>{regulation.title}</Title>
+              </Row>
+            </RegDiv>
+          ))}
         </CustomDiv>
+
+        {/* Pagination controls */}
+        <PaginationDiv style={{ textAlign: "center", marginTop: "20px" }}>
+          <Row>
+            <Col span={12}>            
+              <FaArrowLeft size={24} style={{ color: "#861388", cursor: "pointer" }} onClick={() => handlePageChange(currentPage - 1)} />
+            </Col>
+            <Col span={12}>
+              <FaArrowRight size={24} style={{ color: "#861388", cursor: "pointer" }} onClick={() => handlePageChange(currentPage + 1)} />
+            </Col>
+          </Row>
+          <Row>
+            <span style={{ margin: "auto" }}>
+              Page {currentPage} of {totalPages}
+            </span>
+          </Row>
+        </PaginationDiv>
       </ScrollableCol>
 
       <SecondScrollableCol span={isMiddleClicked ? 12 : 12} className={`right ${isMiddleClicked ? 'pushed' : ''} ${isMiddleClicked ? 'visible' : ''}`}>
@@ -197,15 +238,7 @@ const PushableCols = ({ t }: Props) => {
         )}
         {showEcosystem && (
           <div>
-            <CircleDiv>
-              <GiWheat size={46} style={{ color: "#fdd2cf"}}/>
-            </CircleDiv>
-            <Row>
-              <TitleConstruction><ReactTyped strings={["Ecosystem"]} typeSpeed={40} style={{ color: "#000000", fontSize: "1.2em" }}/></TitleConstruction>
-            </Row>
-            {industries.map((industry: any) => (
-              <H6 key={industry.name}>{industry.name}</H6>
-            ))}
+
           </div>
         )}
         {showAbout && (

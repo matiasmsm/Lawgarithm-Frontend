@@ -1,2 +1,1 @@
-# Lawgorithm
 # Lawgarithm-Frontend

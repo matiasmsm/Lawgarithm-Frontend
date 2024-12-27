@@ -89,20 +89,15 @@ export const ContentWrapper = styled("div")`
 
 export const H6 = styled("h6")`
   font-size: 1.2em;
-  color: #000000;
+  color: #fafafa;
   @media (min-width: 250px) and (max-width: 600px) {
    font-size: 0.8em;
   }
 `;
 
 export const FixedCol = styled(Column)`
-  z-index: 1;
-  position: fixed;
-  top: 0;
-  left: 0;
   height: 100vh; 
-  background: #0d0200;
-  width: 127%;
+  background: #fafafa;
 `;
 export const FirstDiv = styled("div")`
   height: 10vh;
@@ -115,26 +110,15 @@ export const SectionDiv = styled("div")`
 ;
 
 export const CustomDiv = styled("div")`
-  padding: 10%;
-  margin-top: 20%;
-  height: 100%; /* Ensure the div takes up full height */
 `;
 
 export const IntroDiv = styled("div")`
-  height: 50vh;
-  width: 40vw;
-  margin: 0vh auto 30vh;
+  height: 20vh;
+  width: 30vw;
+  margin-top: 14vh;
   margin-left: 10vw;
 `;
 
-export const Title = styled("h1")`
-  font-size: 2.8em;
-  color: #0d0200;
-  width: 35vw;
-  text-align: left;
-  margin-top: 20vh;
-  margin-left: 5vw;
-`;
 
 export const TryTitle = styled("h1")`
   font-size: 3em;
@@ -186,7 +170,7 @@ export const CustomImgMain = styled("img")`
 export const ScrollableCol = styled(Column)`
   overflow-y: scroll;
   height: 100vh;
-  background: #0d0200;
+  background: #fafafa;
 `;
 
 export const SecondScrollableCol = styled(Column)`
@@ -213,26 +197,16 @@ export const SubtitleConstruction = styled("h3")`
   margin-bottom: -2vh;
 `;
 
-export const Brand = styled("h1")`
-  font-size: 8em;
-  margin:auto;
-  z-index: 9999;
-  margin-left: 35.8vw;
-  margin-right: -65.5vw;
-  font-weight: bold;
-  color: #ffffff;
-`;
-
 export const CircleDiv= styled("div")`
   height: 5vw;
   width: 5vw;
   margin-left: 2vw;
-  margin-top: 2vh;
+  margin-top: 0vh;
   border: 1px solid #000000;
   padding-left: 0.7vw;
   padding-top: 0.7vw;
   border-radius: 50%;
-  margin-bottom: -4vh;
+  margin-bottom: 0vh;
 `;
 
 export const ArrowDownDiv= styled("div")`
@@ -248,7 +222,6 @@ export const ArrowDownDiv= styled("div")`
 `;
 
 export const SignupDiv= styled("div")`
-  margin-top: -50vh;
   margin-left: 10vw;
 `;
 
@@ -273,8 +246,13 @@ export const GenerateButtonDiv= styled("div")`
 
 export const LogoDiv= styled("div")`
   margin-top: 10vh;
-  margin-left: 9vw;
   margin-bottom: 4vh;
+`;
+
+export const Brand = styled("h1")`
+  font-size: 2.2em;
+  margin-left: 10vw;
+  color: #1b1a1a;
 `;
 
 export const TryItDiv =  styled("div")`
@@ -282,6 +260,58 @@ export const TryItDiv =  styled("div")`
 `;
 
 export const IntroRow =  styled("div")`
-  margin-top: -10vh;
   margin-bottom: 10vh;
+`;
+
+export const RegDiv = styled("div")`
+  border: 3px solid #68B684;
+  border-radius: 10px;
+  width: 50vw;
+  margin: auto;
+  margin-top: 2vh;
+  height: 15vh;
+  overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
+
+`;
+
+export const Title = styled("a")`
+  font-size: 1.3em;
+  margin:auto;
+  margin-top: 2vh;
+  color: #1b1a1a;
+  width: 40vw;
+  text-align: justify;
+  &:hover {
+    color: #68B684;
+  }
+`;
+
+export const Country = styled("h1")`
+  font-size: 1.2em;
+  margin:auto;
+  margin-left: 1vw;
+  margin-top: 1vh;
+  font-weight: bold;
+  color: #861388;
+`;
+
+export const Summary = styled("h1")`
+  margin-left: 1vw;
+  margin-top: 1vh;
+  font-size: 1em;
+  color: #861388;
+`;
+
+export const HompageOptionsDiv = styled("div")`
+  width: 40vw;
+  margin: auto;
+  margin-left: 8vw;
+  margin-top: 10vh;
+`;
+
+
+export const PaginationDiv = styled("div")`
+  width: 20vw;
+  margin: auto;
+  margin-top: 2vh;
 `;

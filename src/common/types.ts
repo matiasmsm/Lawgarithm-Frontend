@@ -3,13 +3,16 @@ export interface ContainerProps {
   children: React.ReactNode;
 }
 
+// ../types/index.ts (or wherever ButtonProps is defined)
 export interface ButtonProps {
   color?: string;
   fixedWidth?: boolean;
-  name?: string;
+  onClick?: () => void; // Mark as optional
   children: React.ReactNode;
-  onClick?: () => void;
+  disabled?: boolean; // Add this line
+  name?: string;
 }
+
 
 export interface ImageProps {
   src: string;

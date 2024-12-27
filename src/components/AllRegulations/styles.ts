@@ -6,7 +6,7 @@ export const SearchBarDiv = styled("div")`
   display: flex;
   justify-content: center;
   margin-top: 5vh;
-  margin-bottom: 5vh;
+  margin-bottom: 3vh;
 `;
 
 
@@ -59,7 +59,7 @@ export const Country = styled("h1")`
 export const Summary = styled("h1")`
   margin-left: 1vw;
   margin-top: 1vh;
-  font-size: 1em;
+  font-size: 0.8em;
   color: #979797;
 `;
 
@@ -67,4 +67,14 @@ export const PaginationDiv = styled("div")`
   width: 20vw;
   margin: auto;
   margin-top: 2vh;
+`;
+
+export const ArrowDiv = styled("div")`
+  text-align: center;
+  color: #68B684;
+  cursor: pointer;
+  &:hover {
+    scale: 1.1;
+    color: #861388;
+  }
 `;

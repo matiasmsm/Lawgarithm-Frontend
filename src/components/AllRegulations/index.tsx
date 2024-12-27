@@ -2,8 +2,7 @@ import { lazy, useState, useEffect } from "react";
 import { withTranslation } from "react-i18next";
 
 import {CustomDiv, RegDiv, Title, Country, Summary, PaginationDiv,
-  SearchBarDiv
-  } from "./styles";
+  SearchBarDiv, ArrowDiv } from "./styles";
 
 import { get_regulations, get_regulations_country, get_countries } from '../../api';
 
@@ -127,35 +126,42 @@ return (
           ))}
         </select>
       </SearchBarDiv>
-
-      <CustomDiv>
-        {filteredRegulations.map((regulation: any) => (
-          <RegDiv key={regulation.id}>
-            <Row>
-              <Col span={16}>
-                <Country>{regulation.country}</Country>
-              </Col>
-              <Col span={8}>
-                <Summary>{regulation.timestamp}</Summary>
-              </Col>
-            </Row>
-            <Row>
-              <Title href={regulation.link}>{regulation.title}</Title>
-            </Row>
-          </RegDiv>
-        ))}
-      </CustomDiv>
+      <Row>
+        <Col span={2}>
+          {(currentPage > 1) && (
+          <ArrowDiv>
+            <FaArrowLeft size={24} onClick={() => handlePageChange(currentPage - 1)} />
+          </ArrowDiv>
+          )}
+        </Col>
+        <Col span={20}>
+          <CustomDiv>
+            {filteredRegulations.map((regulation: any) => (
+              <RegDiv key={regulation.id}>
+                <Row>
+                  <Col span={16}>
+                    <Country>{regulation.country}</Country>
+                  </Col>
+                  <Col span={8}>
+                    <Summary>{regulation.timestamp}</Summary>
+                  </Col>
+                </Row>
+                <Row>
+                  <Title href={regulation.link}>{regulation.title}</Title>
+                </Row>
+              </RegDiv>
+            ))}
+          </CustomDiv>
+        </Col>
+        <Col span={2}>
+          <ArrowDiv>
+            <FaArrowRight size={24} onClick={() => handlePageChange(currentPage + 1)} />
+          </ArrowDiv>
+        </Col>
+      </Row>
 
       {/* Pagination controls */}
       <PaginationDiv style={{ textAlign: "center", marginTop: "20px" }}>
-        <Row>
-          <Col span={12}>            
-            <FaArrowLeft size={24} style={{ color: "#861388", cursor: "pointer" }} onClick={() => handlePageChange(currentPage - 1)} />
-          </Col>
-          <Col span={12}>
-            <FaArrowRight size={24} style={{ color: "#861388", cursor: "pointer" }} onClick={() => handlePageChange(currentPage + 1)} />
-          </Col>
-        </Row>
         <Row>
           <span style={{ margin: "auto" }}>
             Page {currentPage} of {totalPages}

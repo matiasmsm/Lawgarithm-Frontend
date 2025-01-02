@@ -1,5 +1,7 @@
 import { lazy, useState, useEffect } from "react";
 import { withTranslation } from "react-i18next";
+import { useNavigate } from 'react-router-dom';
+
 
 import {CustomDiv, RegDiv, Title, Country, Summary, PaginationDiv,
   SearchBarDiv, ArrowDiv } from "./styles";
@@ -10,6 +12,8 @@ import { Row, Col } from "antd";
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeft } from "react-icons/fa6";
 
+import SingleRegulation from "../SingleRegulation";
+
 
 
 interface Props {
@@ -17,6 +21,7 @@ interface Props {
 }
 
 const AllRegulations = ({ t }: Props) => {
+  const navigate = useNavigate();
 
   const [regulations, setRegulations] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,6 +108,10 @@ const AllRegulations = ({ t }: Props) => {
     fetchRegulationsCountry();
   }
 
+  const handleRegulationClick = (id: number) => {
+    navigate(`/regulation/${id}`); // Navigate to the single regulation route
+  };
+
 return (
     <>
       <SearchBarDiv>
@@ -137,7 +146,7 @@ return (
         <Col span={20}>
           <CustomDiv>
             {filteredRegulations.map((regulation: any) => (
-              <RegDiv key={regulation.id}>
+              <RegDiv key={regulation.id} onClick={() => handleRegulationClick(regulation.id)}>
                 <Row>
                   <Col span={16}>
                     <Country>{regulation.country}</Country>
@@ -147,7 +156,7 @@ return (
                   </Col>
                 </Row>
                 <Row>
-                  <Title href={regulation.link}>{regulation.title}</Title>
+                  <Title>{regulation.title}</Title>
                 </Row>
               </RegDiv>
             ))}

@@ -98,15 +98,13 @@ export const ChatInput = styled.input`
   height: 60px;
   padding-left: 50px;
   padding-right: 10px;
-  background-color: #1b0905;
-  border: 1px solid #fdd2cf;
+  border: 1px solid #1b1a1a;
   border-radius: 5px;
   font-size: 16px;
   outline: none;
-  color: #fdd2cf;
+  color: #1b1a1a;
 
   &:focus {
-    border-color: #fdd2cf; /* Keep the same border color on focus */
     background-color: rgba(10, 10, 10, 0.2); /* Prevent background change */
     box-shadow: none; /* Remove any focus-related box-shadow */
   }
@@ -121,12 +119,25 @@ export const SendButton = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #37f87b;
+  color: #FF6F59;
   outline: none;
   padding: 0;
 
   &:hover,
   &:focus {
-    color: rgba(240, 237, 238, 0.4);
+    color: #D64045;
   }
+`;
+
+export const ChatDiv = styled.div`
+  height: 50vh;
+  bottom: 8vh; /* Align it to the bottom */
+  align-items: center;
+  width: 60vw;
+  color: #747473;
+  font-size: 1.4em;
+  margin: auto;
+  text-align: justify;
+  margin-top: 5vh;
+  y-overflow: auto;
 `;

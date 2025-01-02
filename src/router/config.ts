@@ -25,6 +25,11 @@ const routes = [
     exact: true,
     component: "Regulations",
   },
+  {
+    path: "/regulation/:id",
+    exact: true,
+    component: "Regulation",
+  },
 ];
 
 export default routes;

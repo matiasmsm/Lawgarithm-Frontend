@@ -127,7 +127,7 @@ const PushableCols = ({ t }: Props) => {
   };
 
   const handleExploreClick = () => {
-    navigate("/regulations");
+    navigate("/dashboard");
   };
 
   const handleSignupClick = () => {

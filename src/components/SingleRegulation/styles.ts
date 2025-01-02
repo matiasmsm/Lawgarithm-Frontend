@@ -26,7 +26,7 @@ export const IntroDiv = styled("div")`
 `;
 
 export const RegDiv = styled("div")`
-  border: 1px solid #861388;
+  border: 1px solid #68B684;
   border-radius: 10px;
   width: 21vw;
   margin: auto;
@@ -35,46 +35,48 @@ export const RegDiv = styled("div")`
   overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
   cursor: pointer;
   &:hover {
-    border: 2px solid #68B684;
-    scale: 1.03;
+    background: rgba(0, 0, 0, 0.2);
+    scale: 1.01;
   }
 `;
 
 export const Title = styled("a")`
-  font-size: 1em;
-  margin: 1vh;
-  margin-top: 3vh;
-  color: #1b1a1a;
+  font-size: 1.9em;
+  margin: auto;
+  margin-top: 10vh;
+  max-width: 60vw;
+  color: #68B684;
   text-align: justify;
 `;
 
 export const Country = styled("h1")`
-  font-size: 1em;
+  font-size: 1.3em;
   margin:auto;
-  margin-left: 1vw;
   margin-top: 1vh;
   color: #979797;
 `;
 
 export const Summary = styled("h1")`
+  width: 60vw;
+  margin: auto;
+  margin-top: 8vh;
+  font-size: 1em;
+  color: #1b1a1a;
+  text-align: justify;
+  line-height: 1.5;
+`;
+
+
+export const Date = styled("h1")`
+  margin: auto;
+  margin-top: 1vh;
+  font-size: 1em;
+  color: #1b1a1a;
+`;
+
+export const Entity = styled("h1")`
   margin-left: 1vw;
   margin-top: 1vh;
   font-size: 0.8em;
   color: #979797;
-`;
-
-export const PaginationDiv = styled("div")`
-  width: 20vw;
-  margin: auto;
-  margin-top: 2vh;
-`;
-
-export const ArrowDiv = styled("div")`
-  text-align: center;
-  color: #68B684;
-  cursor: pointer;
-  &:hover {
-    scale: 1.1;
-    color: #861388;
-  }
 `;

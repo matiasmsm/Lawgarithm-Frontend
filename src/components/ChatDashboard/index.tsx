@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { SugestionsContainer, ChatContainer, PrimaryChoiseDiv, 
   SecondaryChoiseDiv, TertiaryChoiseDiv, ChoiseTitle, IconDiv, ChatInput, SendButton,
-   InputContainer, LoadingDiv } from './styles';
+   InputContainer, LoadingDiv, ChatDiv} from './styles';
 import { Row, Col, message } from "antd";
-import { chat_query } from '../../api';
+
+import { ask_regulation } from '../../api';
 import { CircularProgress } from '@mui/material';
-
-
-import BusinessesDashboard from "../BusinessesDashboard"
+import { ReactTyped } from "react-typed";
 
 import { IoStorefrontOutline } from "react-icons/io5";
 import { RiFlowChart } from "react-icons/ri";
@@ -48,46 +47,19 @@ interface Business {
 
 
 const ChatDashboard: React.FC = () => {
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isSugestionsOpen, setIsSugestionsOpen] = useState(true);
-  const [isExploreOpen, setIsExploreOpen] = useState(true);
-  const [isManageOpen, setIsManageOpen] = useState(false);
-  const [isBusinessesOpen, setIsBusinessesOpen] = useState(false);
+  const [isResponseOpen, setIsResponseOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
-  const [currentBusiness, setCurrentBusiness] = useState<any>(null);
-
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
+  const [chatResponse, setChatResponse] = useState<string>("");
 
   const handleSetLoading = () => {
     setIsSugestionsOpen(false);
-    setIsBusinessesOpen(false);
+    setIsResponseOpen(false);
     setLoading(true);
-  };
-
-  const handleCreateClick = () => {
-    setIsCreateOpen(true);
-    setIsSugestionsOpen(false);
-    setIsBusinessesOpen(false);
-  };
-
-  const handleBusinessesClick = () => {
-    setIsSugestionsOpen(false);
-    setIsBusinessesOpen(true);
-  };
-
-  const handleOpenManage = (initialBusiness = null) => {
-    setIsSugestionsOpen(false);
-    setIsManageOpen(true);
-    setCurrentBusiness(initialBusiness);
-  };
-
-  const handleCreateFormSubmit = (data: Business) => {
-    setIsCreateOpen(false); // Close the form
-    setIsManageOpen(true);  // Open the manage view
-    setCurrentBusiness(data); // Set the current business data
   };
 
   async function handleSendMessage(event?: React.FormEvent) {
@@ -98,19 +70,15 @@ const ChatDashboard: React.FC = () => {
     if (input.trim()) {
       setMessages([...messages, { sender: "user", text: input }]);
       setIsSugestionsOpen(false);
-      setIsBusinessesOpen(false);
-      setIsManageOpen(false);
+      setIsResponseOpen(false);      
       handleSetLoading();
       try {
-        const response = await chat_query(input);
+        const response = await ask_regulation(input);
         const statusCode = response.status;
         if (statusCode === 200) {
           const responseData = response.data;
-          const type = responseData.type;
-          const specification = responseData.specification;
-          if (type === 'Manage') {
-            handleOpenManage(specification);
-          }
+          setChatResponse(responseData.answer);
+          setIsResponseOpen(true);
         } else {
           message.error('There was an error');
         } 
@@ -130,7 +98,7 @@ const ChatDashboard: React.FC = () => {
         <SugestionsContainer>
           <Row>
             <Col span={8}>
-              <PrimaryChoiseDiv onClick={handleCreateClick}>
+              <PrimaryChoiseDiv>
                 <IconDiv><RiToolsFill size={32}/></IconDiv>
                 <ChoiseTitle>Create</ChoiseTitle>
               </PrimaryChoiseDiv>
@@ -150,7 +118,7 @@ const ChatDashboard: React.FC = () => {
           </Row>
           <Row>
             <Col span={8}>
-              <TertiaryChoiseDiv onClick={handleBusinessesClick}>
+              <TertiaryChoiseDiv>
                 <IconDiv><IoSettingsSharp size={32}/></IconDiv>
                 <ChoiseTitle>Settings</ChoiseTitle>
               </TertiaryChoiseDiv>
@@ -175,8 +143,18 @@ const ChatDashboard: React.FC = () => {
           <CircularProgress size={58} style={{color:'#07ca4b'}} />
         </LoadingDiv>
       )}
-      {isBusinessesOpen && (
-        <BusinessesDashboard/>
+      {isResponseOpen && (
+        <div>
+          <ChatDiv>
+            <ReactTyped
+              strings={[chatResponse]}
+              typeSpeed={1}          // Extremely fast typing speed
+              backSpeed={0}          // No backspace effect
+              startDelay={0}         // No delay before typing starts
+              showCursor={false}     // Optionally hide the cursor for a cleaner effect
+            />
+          </ChatDiv>
+        </div>
       )}
       <ChatContainer>
         <InputContainer>

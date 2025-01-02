@@ -82,10 +82,22 @@ export const get_regulations = async (page: number, pageSize: number) => {
       }
     });
 
-    return response;  // Ensure you're returning the actual data from the response
+    return response;
 
   } catch (error: any) {
     throw new Error((error as AxiosError)?.response?.data?.message || 'Get industry types failed');
+  }
+};
+
+export const get_regulation = async (id: string) => {
+  try {
+    const response = await backendAPI.get(`regulations/${id}`);
+
+    return response;
+  } catch (error: any) {
+    throw new Error(
+      (error as AxiosError)?.response?.data?.message || 'Failed to fetch regulation'
+    );
   }
 };
 
@@ -101,6 +113,22 @@ export const get_regulations_country = async (country: string, page: number, pag
     return response;
   } catch (error: any) {
     throw new Error((error as AxiosError)?.response?.data?.message || 'Fetching regulations for a country failed');
+  }
+};
+
+export const ask_regulation = async (query: string) => {
+  try {
+    // Use `params` to send query parameters
+    console.log(query);
+    const response = await backendAPI.get(`regulations/ask`, {
+      params: { query },
+    });
+    console.log(response);
+    return response;
+  } catch (error: any) {
+    throw new Error(
+      (error as AxiosError)?.response?.data?.message || 'Failed to fetch regulation'
+    );
   }
 };
 
